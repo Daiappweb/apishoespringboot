@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="role")
-public class RoleEntity extends BaseEntity{
+public class RoleEntity extends BaseEntity<RoleEntity>{
 	@ManyToMany(mappedBy="roles")
 	private Set<UserEntity>users;
 }

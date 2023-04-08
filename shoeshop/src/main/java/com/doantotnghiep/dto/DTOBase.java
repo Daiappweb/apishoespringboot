@@ -3,8 +3,8 @@ package com.doantotnghiep.dto;
 
 import java.util.Date;
 
-public class DTOBase<T> {
-	private long id;
+public abstract class DTOBase<T> {
+	private Long id;
 	private String name;
 	private String code;
 	private String description;
@@ -13,10 +13,10 @@ public class DTOBase<T> {
 	private String createdByUser;
 	private String updatedByUser;
 	private int isDeleted;
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

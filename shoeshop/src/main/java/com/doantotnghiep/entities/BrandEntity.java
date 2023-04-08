@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="brand")
-public class BrandEntity extends BaseEntity{
+public class BrandEntity extends BaseEntity<BrandEntity>{
 	@OneToMany(mappedBy="brand")
 	private Set<ProductEntity>products;
 }

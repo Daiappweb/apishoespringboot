@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="image")
-public class ImageEntity extends BaseEntity{
+public class ImageEntity extends BaseEntity<ImageEntity>{
 	@ManyToMany(mappedBy="images")
 	private Set<ProductEntity>products;
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="product")
-public class ProductEntity extends BaseEntity {
+public class ProductEntity extends BaseEntity<ProductEntity> {
 	@Column 
 	private long quantity;
 	

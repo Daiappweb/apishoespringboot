@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="importreceiptdetail")
-public class ImportReceiptDetailEntity extends BaseEntity{
+public class ImportReceiptDetailEntity extends BaseEntity<ImportReceiptDetailEntity>{
 	@ManyToMany(mappedBy="importReceiptDetails")
 	private Set<ProductEntity>products;
 }

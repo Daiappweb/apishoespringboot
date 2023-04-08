@@ -5,6 +5,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="importreceipt")
-public class ImportReceiptEntity extends BaseEntity{
+public class ImportReceiptEntity extends BaseEntity<ImportReceiptEntity>{
 
 }

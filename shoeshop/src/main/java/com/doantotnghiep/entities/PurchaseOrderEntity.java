@@ -5,6 +5,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="purchaseorder")
-public class PurchaseOrderEntity extends BaseEntity{
+public class PurchaseOrderEntity extends BaseEntity<PurchaseOrderEntity>{
 
 }
