@@ -28,7 +28,7 @@ public abstract class BaseEntity<T> {
 	@Column 
 	private String code;
 	
-	@Column
+	@Column(columnDefinition = "LONGTEXT")
 	private String description;
 	
 	@Column
