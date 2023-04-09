@@ -1,13 +1,24 @@
 package com.doantotnghiep.api;
 
+import java.io.IOException;
+
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.doantotnghiep.api.output.ProductOutput;
 import com.doantotnghiep.dto.DTOProduct;
 import com.doantotnghiep.service.impl.ProductService;
 
@@ -18,13 +29,30 @@ public class ProductAPI {
 	private ProductService service;
 	
 	@PostMapping(value="/product")
-	public DTOProduct createProduct(@RequestBody DTOProduct product) {
-		return service.saveDTO(product);
+	public DTOProduct createProduct(@RequestPart DTOProduct product, @RequestParam MultipartFile[]files) throws IOException {
+		return service.saveDTO(product,files);
 	}
 	
-	@PutMapping(value = "/product/{id}")
-	public DTOProduct updateProduct(@RequestBody DTOProduct dto, @PathVariable("id") long id) {
-		dto.setId(id);
-		return service.saveDTO(dto);
+	@GetMapping(value = "/product")
+	public ProductOutput getAllProduct(@RequestParam(value ="page",required = false) Integer page,
+							 @RequestParam(value = "limit",required = false) Integer limit) {
+		ProductOutput result = new ProductOutput();
+		if(page!=null && limit !=null) {
+			result.setPage(page);
+			Pageable pageable = new PageRequest(page - 1, limit);
+			result.setProducts(service.findAll(pageable));
+			result.setTotalPage((int) Math.ceil((double) (service.totalItem()) / limit));
+		}else {
+			result.setProducts(service.findAll());
+		}
+		
+		return result;
 	}
+	
+	@GetMapping(value = "/product/{id}")
+	public DTOProduct getProductById(@PathVariable Long id) {
+		return service.findById(id);
+	}
+	
 }
+

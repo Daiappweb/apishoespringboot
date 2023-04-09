@@ -2,12 +2,14 @@ package com.doantotnghiep.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,11 +24,14 @@ public class ProductEntity extends BaseEntity<ProductEntity> {
 	@Column(name="in_stock")
 	private long inStock;
 	
-	@ManyToMany
-	@JoinTable(name="product_image",
-			joinColumns = @JoinColumn(name="product_id"),
-		inverseJoinColumns = @JoinColumn(name="image_id")
-			)
+//	@ManyToMany
+//	@JoinTable(name="product_image",
+//			joinColumns = @JoinColumn(name="product_id"),
+//		inverseJoinColumns = @JoinColumn(name="image_id")
+//			)
+//	private Set<ImageEntity>images;
+	
+	@OneToMany(mappedBy="product",cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ImageEntity>images;
 	
 	@ManyToMany
