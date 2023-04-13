@@ -6,30 +6,36 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.doantotnghiep.dto.DTOCategory;
+import com.doantotnghiep.dto.DTOColor;
 import com.doantotnghiep.dto.DTOImage;
 import com.doantotnghiep.dto.DTOProduct;
+import com.doantotnghiep.dto.DTOSize;
+import com.doantotnghiep.entities.CategoryEntity;
+import com.doantotnghiep.entities.ColorEntity;
 import com.doantotnghiep.entities.ImageEntity;
 import com.doantotnghiep.entities.ProductEntity;
+import com.doantotnghiep.entities.SizeEntity;
 
 @Component
 public class ProductConverter extends BaseConverter<ProductEntity,DTOProduct>{
 	@Autowired
 	private ImageConverter imageConverter;
+	@Autowired
+	private BrandConverter brandConverter;
+	@Autowired
+	private ColorConverter colorConverter;
+	@Autowired
+	private SizeConverter sizeConverter;
+	@Autowired
+	private CategoryConverter categoryConverter;
+	
 	public ProductEntity toEntity(DTOProduct dto) {
 		
 		ProductEntity entity = (ProductEntity) super.toEntity(dto);
 		entity.setQuantity(dto.getQuantity());
 		entity.setPrice(dto.getPrice());
 		entity.setInStock(dto.getInStock());
-		
-//		Set<DTOImage> images = dto.getImages();
-//		
-//		Set<ImageEntity>imageEntites = new HashSet<>();
-//		for (DTOImage dtoImage : images) {
-//			imageEntites.add(imageConverter.toEntity(dtoImage));
-//		}
-//		entity.setImages(imageEntites);
-		
 		return entity;
 	}
 	
@@ -48,8 +54,30 @@ public class ProductConverter extends BaseConverter<ProductEntity,DTOProduct>{
 			images.add(imageConverter.toDTO(image));
 		}
 		
-		dto.setImages(images);
+		Set<ColorEntity>colorEntities = entity.getColors();
+		Set<DTOColor>colors = new HashSet<>();
+		for (ColorEntity item : colorEntities) {
+			colors.add(colorConverter.toDTO(item));
+		}
 		
+		Set<SizeEntity>sizeEntities = entity.getSizes();
+		Set<DTOSize>sizes = new HashSet<>();
+		for (SizeEntity item : sizeEntities) {
+			sizes.add(sizeConverter.toDTO(item));
+		}
+		
+		Set<CategoryEntity>categoryEntities = entity.getCategories();
+		Set<DTOCategory>categories = new HashSet<>();
+		for (CategoryEntity item : categoryEntities) {
+			categories.add(categoryConverter.toDTO(item));
+		}
+		
+		
+		dto.setImages(images);
+		dto.setBrand(brandConverter.toDTO(entity.getBrand()));
+		dto.setColors(colors);
+		dto.setSizes(sizes);
+		dto.setCategories(categories);
 		return dto;
 	}
 

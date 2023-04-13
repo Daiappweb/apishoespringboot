@@ -47,8 +47,13 @@ public class ImageConverter extends BaseConverter<ImageEntity,DTOImage>{
 	}
 	
 	public String toBase64(byte[] data) {
-		byte[] base64 = Base64.getEncoder().encode(data);
-		return new String(base64);
+		 String imageType = "jpeg";
+		    if (data[0] == (byte) 0x89 && data[1] == 'P' && data[2] == 'N' && data[3] == 'G') {
+		        imageType = "png";
+		    }
+		String base64 = Base64.getEncoder().encodeToString(data);
+		String imageUrl = "data:image/"+imageType+";base64," + base64;
+		return imageUrl;
 	}
 
 }

@@ -2,8 +2,6 @@ package com.doantotnghiep.api;
 
 import java.io.IOException;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +25,9 @@ public class ProductAPI {
 	private ProductService service;
 	
 	@PostMapping(value="/product")
-	public DTOProduct createProduct(@RequestPart DTOProduct product, @RequestParam MultipartFile[]files) throws IOException {
-		return service.saveDTO(product,files);
+	public DTOProduct createProduct(@RequestPart DTOProduct product, @RequestParam MultipartFile[]files,@RequestPart String brand,
+			String color,String category,String size) throws IOException {
+		return service.saveDTO(product,files,brand,color,category,size);
 	}
 	
 	@GetMapping(value = "/product")
