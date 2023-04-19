@@ -26,7 +26,7 @@ public class ProductAPI {
 	
 	@PostMapping(value="/product")
 	public DTOProduct createProduct(@RequestPart DTOProduct product, @RequestParam MultipartFile[]files,@RequestPart String brand,
-			String color,String category,String size) throws IOException {
+			@RequestPart String color,@RequestPart String category,@RequestPart String size) throws IOException {
 		return service.saveDTO(product,files,brand,color,category,size);
 	}
 	
