@@ -10,7 +10,7 @@ public class DTOProduct extends DTOBase<DTOProduct>{
 	private Set<DTOImage>images;
 	private Set<DTOSize>sizes;
 	private DTOBrand brand;
-	private Set<DTOOrderDetail>orderDetails;
+	private Set<DTOOrderProduct>orderProducts;
 	private Set<DTOImportReceiptDetail>importReceiptDetails;
 	private long inStock;
 	private long quantity;
@@ -45,11 +45,12 @@ public class DTOProduct extends DTOBase<DTOProduct>{
 	public void setBrand(DTOBrand brand) {
 		this.brand = brand;
 	}
-	public Set<DTOOrderDetail> getOrderDetails() {
-		return orderDetails;
+	
+	public Set<DTOOrderProduct> getOrderProducts() {
+		return orderProducts;
 	}
-	public void setOrderDetails(Set<DTOOrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public void setOrderProducts(Set<DTOOrderProduct> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
 	public Set<DTOImportReceiptDetail> getImportReceiptDetails() {
 		return importReceiptDetails;

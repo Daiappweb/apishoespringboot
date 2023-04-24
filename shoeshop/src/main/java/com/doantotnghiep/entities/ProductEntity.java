@@ -24,13 +24,6 @@ public class ProductEntity extends BaseEntity<ProductEntity> {
 	@Column(name="in_stock")
 	private long inStock;
 	
-//	@ManyToMany
-//	@JoinTable(name="product_image",
-//			joinColumns = @JoinColumn(name="product_id"),
-//		inverseJoinColumns = @JoinColumn(name="image_id")
-//			)
-//	private Set<ImageEntity>images;
-	
 	@OneToMany(mappedBy="product",cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ImageEntity>images;
 	
@@ -59,21 +52,8 @@ public class ProductEntity extends BaseEntity<ProductEntity> {
 	@JoinColumn(name="brand_id")
 	private BrandEntity brand;
 	
-	@ManyToMany
-	@JoinTable(name="product_purchaseorderdetail",
-			joinColumns = @JoinColumn(name="product_id"),
-			inverseJoinColumns = @JoinColumn(name="purchaseorderdetail_id")
-			)
-	private Set<PurchaseOrderDetailEntity>purchaseOrderDetails;
-	
-	@ManyToMany
-	@JoinTable(name="product_importreceiptdetail",
-			joinColumns = @JoinColumn(name="product_id"),
-			inverseJoinColumns = @JoinColumn(name="importreceiptdetail_id")
-			)
-	private Set<ImportReceiptDetailEntity>importReceiptDetails;
-	
-
+	@OneToMany(mappedBy="product",cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<OrderProductEntity>orderProducts;
 
 	public long getQuantity() {
 		return quantity;
@@ -139,21 +119,21 @@ public class ProductEntity extends BaseEntity<ProductEntity> {
 		this.brand = brand;
 	}
 
-	public Set<PurchaseOrderDetailEntity> getPurchaseOrderDetails() {
-		return purchaseOrderDetails;
-	}
-
-	public void setPurchaseOrderDetails(Set<PurchaseOrderDetailEntity> purchaseOrderDetails) {
-		this.purchaseOrderDetails = purchaseOrderDetails;
-	}
-
-	public Set<ImportReceiptDetailEntity> getImportReceiptDetails() {
-		return importReceiptDetails;
-	}
-
-	public void setImportReceiptDetails(Set<ImportReceiptDetailEntity> importReceiptDetails) {
-		this.importReceiptDetails = importReceiptDetails;
-	}
+//	public Set<PurchaseOrderDetailEntity> getPurchaseOrderDetails() {
+//		return purchaseOrderDetails;
+//	}
+//
+//	public void setPurchaseOrderDetails(Set<PurchaseOrderDetailEntity> purchaseOrderDetails) {
+//		this.purchaseOrderDetails = purchaseOrderDetails;
+//	}
+//
+//	public Set<ImportReceiptDetailEntity> getImportReceiptDetails() {
+//		return importReceiptDetails;
+//	}
+//
+//	public void setImportReceiptDetails(Set<ImportReceiptDetailEntity> importReceiptDetails) {
+//		this.importReceiptDetails = importReceiptDetails;
+//	}
 	
 	
 }

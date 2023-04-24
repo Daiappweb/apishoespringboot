@@ -1,14 +1,14 @@
 package com.doantotnghiep.entities;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="importreceiptdetail")
 public class ImportReceiptDetailEntity extends BaseEntity<ImportReceiptDetailEntity>{
-	@ManyToMany(mappedBy="importReceiptDetails")
-	private Set<ProductEntity>products;
+	@OneToOne
+	@JoinColumn(name="p_id", referencedColumnName="id")
+	private ProductEntity product;
 }

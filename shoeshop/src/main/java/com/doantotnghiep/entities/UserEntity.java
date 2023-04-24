@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +28,11 @@ public class UserEntity extends BaseEntity<UserEntity>{
 		inverseJoinColumns = @JoinColumn(name="role_id")
 			)
 	private Set<RoleEntity>roles;
+	
+	
+//	@OneToMany(mappedBy = "user")
+//	private Set<PurchaseOrderEntity>purchaseOrderEntities;
+	
 
 	public String getUserName() {
 		return userName;

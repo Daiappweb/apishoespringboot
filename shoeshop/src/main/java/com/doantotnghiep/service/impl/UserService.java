@@ -61,17 +61,17 @@ public class UserService implements IUserService{
 		return entity!=null?converter.toDTO(entity):null;
 	}
 	
-	public boolean checkExists(String userName,String password) {
+	public DTOUser checkExists(String userName,String password) {
 		UserEntity entity = repository.findOneByUserName(userName);
 		DTOUser user = new DTOUser();
 		if(entity==null) {
-			return false;
+			return null;
 		}
 		user = converter.toDTO(entity);
 		if(passwordEncoder.matches(password, user.getPassword())) {
-			return true;
+			return user;
 		}else {
-			return false;
+			return null;
 		}
 	}
 
