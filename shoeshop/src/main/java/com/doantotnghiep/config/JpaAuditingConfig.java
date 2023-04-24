@@ -1,5 +1,6 @@
 package com.doantotnghiep.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -10,20 +11,28 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class JpaAuditingConfig {
+	@Autowired
+	private  JwtUtils jwtUtils;
 	
 	@Bean
     public AuditorAware<String> auditorProvider() {
-        return new AuditorAwareImpl();
+        return new AuditorAwareImpl(jwtUtils);
     }
 
     public static class AuditorAwareImpl implements AuditorAware<String> {
-        @Override
-        public String getCurrentAuditor() {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null || !authentication.isAuthenticated()) {
-                return null;
-            }
-            return authentication.getName();
+   	 	public AuditorAwareImpl(JwtUtils jwtUtils) {
         }
+    	
+    	
+    	@Override
+    	public String getCurrentAuditor() {
+    		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	        if (authentication != null && authentication.isAuthenticated()) {
+    	            return authentication.getName();
+    	        } else {
+    	            return null;
+    	        }
+    	}
+
     }
 }
