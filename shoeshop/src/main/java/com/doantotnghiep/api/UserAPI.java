@@ -1,25 +1,27 @@
 package com.doantotnghiep.api;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doantotnghiep.api.output.UserOutput;
 import com.doantotnghiep.config.JwtUtils;
 import com.doantotnghiep.dto.CustomReponseWithToken;
 import com.doantotnghiep.dto.DTOUser;
-import com.doantotnghiep.entities.UserEntity;
 import com.doantotnghiep.service.impl.UserService;
 
 
@@ -33,8 +35,21 @@ public class UserAPI {
 	
 	
 	@GetMapping(value="/user")
-	public List<DTOUser> getAllUser() {
-		return service.getAllUser();
+	public UserOutput getAllUser(@RequestParam(value ="page",required = false) Integer page,
+			 @RequestParam(value = "limit",required = false) Integer limit) {
+		UserOutput result = new UserOutput();
+		if(page!=null && limit !=null) {
+			result.setPage(page);
+			Pageable pageable = new PageRequest(page - 1, limit);
+			result.setUsers(service.findAll(pageable));
+			result.setTotalPage((int) Math.ceil((double) (service.totalItem()) / limit));
+		}else {
+			result.setUsers(service.findAll());
+		}
+		return result;
+		
+	
+		
 	}
 	
 	@PostMapping(value="/user")
@@ -51,6 +66,15 @@ public class UserAPI {
 	//pathParam: khi test nhập param và url hiển thị ?...
 	public DTOUser getByEmail(@PathParam(value = "userName") String email) {
 		return service.findByEmail(email);
+	}
+	
+	//delete list user
+	@DeleteMapping(value= "/user")
+	public List<DTOUser> deleteUsers(@RequestParam(required = false) Long[]ids) {
+		if(ids ==null || ids.length == 0) {
+			return Collections.emptyList();
+		}
+		return service.deleteUsers(ids);
 	}
 	
 
@@ -88,6 +112,8 @@ public class UserAPI {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token is invalid");
 	    }
 	}
+	
+	
 
 
 }

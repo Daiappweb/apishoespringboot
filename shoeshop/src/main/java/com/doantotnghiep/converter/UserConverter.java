@@ -58,5 +58,22 @@ public class UserConverter extends BaseConverter<UserEntity, DTOUser>{
 	
 		return entity;
 	}
+	
+	//oldEntity and newEntity
+	public UserEntity toEntity(DTOUser dto, UserEntity entity) {
+		dto.setAddress(entity.getAddress());
+		dto.setEmail(entity.getEmail());
+		dto.setUserName(entity.getUserName());
+		dto.setPassword(entity.getPassword());
+		entity.setCode(dto.getCode());
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setCreatedDate(dto.getCreatedDate());
+		entity.setUpdatedDate(dto.getUpdatedDate());
+		entity.setCreatedBy(dto.getCreatedByUser());
+		entity.setUpdatedBy(dto.getUpdatedByUser());
+		entity.setIsDeleted(dto.getIsDeleted());
+		return entity;
+	}
 
 }
