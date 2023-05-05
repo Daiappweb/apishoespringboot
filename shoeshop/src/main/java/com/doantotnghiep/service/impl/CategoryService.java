@@ -1,5 +1,8 @@
 package com.doantotnghiep.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,15 @@ public class CategoryService implements ICategoryService{
 		CategoryEntity entity = converter.toEntity(category);
 		repository.save(entity);
 		return converter.toDTO(entity);
+	}
+	@Override
+	public List<DTOCategory> getAllCategories() {
+		List<CategoryEntity>categoryEntities = repository.findAll();
+		List<DTOCategory>dtoCategories = new ArrayList<DTOCategory>();
+		for (CategoryEntity entity : categoryEntities) {
+			dtoCategories.add(converter.toDTO(entity));
+		}
+		return dtoCategories;
 	}
 
 }

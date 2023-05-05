@@ -1,5 +1,8 @@
 package com.doantotnghiep.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +25,15 @@ public class BrandService implements IBrandService{
 		repository.save(entity);
 		return converter.toDTO(entity);
 	}
+	@Override
+	public List<DTOBrand> getAllBrands() {
+		List<BrandEntity>brandEntities = repository.findAll();
+		List<DTOBrand>dtoBrands = new ArrayList<DTOBrand>();
+		for (BrandEntity entity : brandEntities) {
+			dtoBrands.add(converter.toDTO(entity));
+		}
+		return dtoBrands;
+	}
+	
 
 }
